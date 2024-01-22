@@ -1,5 +1,5 @@
 import { TUrlRequest } from "../_types/request.type";
-import makeSortUrl from "../lib/common";
+import shortString from "../lib/common";
 import UrlsModel from "../models/url.model";
 import crypto from 'crypto-js';
 
@@ -15,8 +15,8 @@ class UrlsController {
 
         const protocol = url.split('://')[0];
         const urlEncrypt = crypto.AES.encrypt(JSON.stringify(url.split('://')[1]), '123').toString();
-        const sortUrl = makeSortUrl(10,urlEncrypt);
-        const sortCode = makeSortUrl(10,urlEncrypt);
+        const sortUrl = shortString(10,urlEncrypt);
+        const sortCode = shortString(10,urlEncrypt);
 
         const urlModel = new UrlsModel();
         urlModel.originalUrl = url;
