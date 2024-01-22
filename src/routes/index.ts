@@ -5,7 +5,7 @@ import urlsRoute from './urls.route';
 const routes = Router();
 
 routes.get('/health', (req : Request, res: Response) => {
-    res.send('server health good....' + Math.random());
+    res.send('server health good....');
 });
 
 /**
