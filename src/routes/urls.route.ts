@@ -24,10 +24,16 @@ urlsRoute.get('/urls', async (req: Request, res: Response) => {
     res.send(response);
 });
 
-urlsRoute.get('/:sortUrl',validateUrl, async (req: Request, res: Response) => {
+urlsRoute.get('/short-url',validateUrl, async (req: Request, res: Response) => {
+
+    const { error, value } = josSchema.validate(req.query);
+
+    if(error){
+        res.send(error.message);
+    }
 
     const urlController = new UrlsController();
-    const response = await urlController.redirect(req.params.sortUrl);
+    const response = await urlController.redirect(req.query.url as string);
     res.writeHead(301, {
         Location: response
       }).end();

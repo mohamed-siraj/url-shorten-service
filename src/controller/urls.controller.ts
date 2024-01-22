@@ -1,7 +1,7 @@
 import { TUrlRequest } from "../_types/request.type";
 import makeSortUrl from "../lib/common";
 import UrlsModel from "../models/url.model";
-
+import crypto from 'crypto-js';
 
 class UrlsController {
 
@@ -12,12 +12,15 @@ class UrlsController {
         /**
          * generate sort url and sort code
          */
-        const sortUrl = `${makeSortUrl(10, url.split('//')[1]).replace('/', '').replace('/.', '').replace('.', '')}`;
-        const sortCode = makeSortUrl(10, url.split('//')[1]).replace('/', '').replace('/.', '').replace('.', '');
+
+        const protocol = url.split('://')[0];
+        const urlEncrypt = crypto.AES.encrypt(JSON.stringify(url.split('://')[1]), '123').toString();
+        const sortUrl = makeSortUrl(10,urlEncrypt);
+        const sortCode = makeSortUrl(10,urlEncrypt);
 
         const urlModel = new UrlsModel();
         urlModel.originalUrl = url;
-        urlModel.sortUrl = sortUrl;
+        urlModel.sortUrl = `${protocol}://${sortUrl}`;
         urlModel.sortCode = sortCode;
         return await urlModel.save();
 
