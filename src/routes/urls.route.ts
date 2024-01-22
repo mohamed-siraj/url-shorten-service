@@ -40,7 +40,7 @@ urlsRoute.get('/short-url',validateUrl, async (req: Request, res: Response) => {
 });
 
 
-urlsRoute.delete('/:sortCode', async (req: Request, res: Response) => {
+urlsRoute.delete('/urls/:sortCode', async (req: Request, res: Response) => {
 
     const urlController = new UrlsController();
     const response = await urlController.delete(req.params.sortCode);
